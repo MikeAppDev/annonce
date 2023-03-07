@@ -7,3 +7,11 @@ controllers:
 homepage:
     path: /
     controller: App\Controller\DefaultController::index
+
+announces.index:
+    path: /announces
+    controller: App\Controller\AnnounceController::index
+
+announce.show:
+    path: /announces/show/{id}
+    controller: App\Controller\AnnounceController::show

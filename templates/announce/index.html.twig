@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des annonces{% endblock %}
+
+{% block body %}
+    <div class="mt-5 text-center">
+    <h1 class="mb-5">Liste des annonces</h1>
+        {% for announce in announces %}
+        <div class="text-center border mx-auto my-2 w-50 bg-light">
+            <h3><a class="text-dark" href="{{ path('announce.show', {id: announce.id}) }}">{{ announce.title }}</a></h3>
+            <p>Cliquez sur le titre pour voir le contenu</p>
+            {% if (is_granted('ROLE_USER')) and (announce.user.id == app.user.id)  %}
+            <button class="btn btn-danger mb-3"><a class="text-white text-decoration-none" href="{{ path('posts.delete', {id: announce.id}) }}">Supprimer</a></button>
+            <button class="btn btn-primary mb-3"><a class="text-white text-decoration-none" href="{{ path('posts.update', {id: announce.id}) }}">Modifier</a></button>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}
