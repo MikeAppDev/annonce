@@ -7,7 +7,16 @@
     <div class="mt-5 text-center">
         <div class="text-center border mx-auto my-2 w-50 bg-light">
             <h3>{{ announce.title }}</h3>
-            <p>{{ announce.description }}</p>
+            <strong>Crée par : {{ announce.author.name }}</strong>
+            <br>
+            <em>Le : {{ announce.createdAt|date("m/d/Y") }}</em>
+            {% for p in announce.category %}
+            <p class="fw-bold">{{ p.name }}</p>
+            {% endfor %}
+            <p>Description : {{ announce.description }}</p>
+            <p>{{ announce.price }}€</p>
+            <p>Ville : {{ announce.city }}</p>
+            <p>Code Postal : {{ announce.zipcode }}</p>
             {% if (is_granted('ROLE_USER')) and (announce.author.id == app.user.id)  %}
             <button class="btn btn-danger mb-3"><a class="text-white text-decoration-none" href="{{ path('announce.delete', {id: announce.id}) }}">Supprimer</a></button>
             <button class="btn btn-primary mb-3"><a class="text-white text-decoration-none" href="{{ path('announce.edit', {slug: announce.slug}) }}">Modifier</a></button>

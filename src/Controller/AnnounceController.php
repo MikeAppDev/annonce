@@ -31,7 +31,6 @@ class AnnounceController extends AbstractController
     {
         //$entityManager = $doctrine->getManager();
         //$announce = $doctrine->getRepository(Announce::class)->find($id);
-
         $announce = $repository->findOneBy(['slug' => $slug]);
 
         if (!$announce) {

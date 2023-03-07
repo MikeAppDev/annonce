@@ -23,3 +23,7 @@ announce.edit:
 announce.delete:
     path: /announces/delete/{id}
     controller: App\Controller\AnnounceController::delete
+
+category.create:
+    path: /category/create
+    controller: App\Controller\CategoryController::create
