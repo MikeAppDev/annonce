@@ -9,8 +9,8 @@
             <h3>{{ announce.title }}</h3>
             <p>{{ announce.description }}</p>
             {% if (is_granted('ROLE_USER')) and (announce.author.id == app.user.id)  %}
-            <button class="btn btn-danger mb-3"><a class="text-white text-decoration-none" href="{{ path('announces.delete', {id: announce.id}) }}">Supprimer</a></button>
-            <button class="btn btn-primary mb-3"><a class="text-white text-decoration-none" href="{{ path('announces.update', {id: announce.id}) }}">Modifier</a></button>
+            {# <button class="btn btn-danger mb-3"><a class="text-white text-decoration-none" href="{{ path('announces.delete', {id: announce.id}) }}">Supprimer</a></button> #}
+            <button class="btn btn-primary mb-3"><a class="text-white text-decoration-none" href="{{ path('announce.edit', {slug: announce.slug}) }}">Modifier</a></button>
             {% endif %}
         </div>
     </div>

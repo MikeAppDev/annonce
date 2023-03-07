@@ -43,6 +43,7 @@ class AppFixtures extends Fixture
             $announce->setcreatedAt(new \DateTime());
             $announce->setupdatedAt(new \DateTime());
             $announce->setAuthor($user);
+            $announce->setSlug($announce->getTitle());
             $manager->persist($announce);
         }
 

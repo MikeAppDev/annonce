@@ -32,14 +32,16 @@ class AnnounceType extends AbstractType
                 'label' => 'Code Postal'
             ])
             ->add('submit', SubmitType::class, [
-                'label' => 'Poster l\'annonce'    
-            ]);
+                'label' => $options['edit_mode'] ? 'Modifier annonce' : 'Ajouter annonce'
+            ])
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Announce::class,
+            'edit_mode' => false
         ]);
     }
 }

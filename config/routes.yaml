@@ -15,3 +15,7 @@ announces.index:
 announce.show:
     path: /announces/show/{id}
     controller: App\Controller\AnnounceController::show
+
+announce.edit:
+    path: /announces/edit/{slug}
+    controller: App\Controller\AnnounceController::edit
