@@ -11,6 +11,7 @@ class AnnounceVoter extends Voter
 {
     public const EDIT = 'ANNOUNCE_EDIT';
     public const VIEW = 'POST_VIEW';
+    public const DELETE = 'ANNOUNCE_DELETE';
 
     public function __construct(protected Security $security)
     {
@@ -21,7 +22,7 @@ class AnnounceVoter extends Voter
     {
         // replace with your own logic
         // https://symfony.com/doc/current/security/voters.html
-        return in_array($attribute, [self::EDIT, self::VIEW])
+        return in_array($attribute, [self::EDIT, self::VIEW, self::DELETE])
             && $subject instanceof \App\Entity\Announce;
     }
 
@@ -49,6 +50,11 @@ class AnnounceVoter extends Voter
                 // logic to determine if the user can VIEW
                 // return true or false
                 return true;
+                break;
+            case self::DELETE:
+                // logic to determine if the user can VIEW
+                // return true or false
+                return $subject->getAuthor() === $user;
                 break;
         }
 

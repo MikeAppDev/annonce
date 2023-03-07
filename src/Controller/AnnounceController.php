@@ -12,6 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Announce;
 use App\Form\AnnounceType;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 
 class AnnounceController extends AbstractController
 {
@@ -25,18 +26,21 @@ class AnnounceController extends AbstractController
         ]);
     }
 
-    #[Route('/announces/show/{id}', name: 'announces/{id}')]
-    public function show(Announce $announce, EntityManagerInterface $doctrine): Response
+    #[Route('/announces/show/{slug}', name: 'announces/{slug}')]
+    public function show(string $slug, AnnounceRepository $repository, EntityManagerInterface $doctrine): Response
     {
         //$entityManager = $doctrine->getManager();
         //$announce = $doctrine->getRepository(Announce::class)->find($id);
+
+        $announce = $repository->findOneBy(['slug' => $slug]);
+
         if (!$announce) {
             throw $this->createNotFoundException("L'annonce n'existe pas");
         }
         
         return $this->render('announce/show.html.twig', [
             'announce' => $announce,
-            'id' => $announce->getId(),
+            'slug' => $announce->getSlug(),
         ]);
     }
 
@@ -113,5 +117,20 @@ class AnnounceController extends AbstractController
         return $this->renderForm('announce/edit.html.twig', [
             'form' => $form
         ]);
+    }
+
+
+    public function delete(int $id, EntityManagerInterface $manager): Response
+    {
+        
+        // Attention pour ne pas avoir de problèmes avec les commentaires (contrainte de clé étrangère)
+        // Il faut penser à rajouter ceci dans l'entité Comment : #[ORM\JoinColumn(onDelete: 'CASCADE')]
+        
+        $announce = $manager->getReference(Announce::class, $id);
+        $this->denyAccessUnlessGranted('ANNOUNCE_DELETE', $announce);
+        $manager->remove($announce);
+        $manager->flush();
+
+        return $this->redirectToRoute('announces.index');
     }
 }

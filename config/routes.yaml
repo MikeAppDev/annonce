@@ -13,9 +13,13 @@ announces.index:
     controller: App\Controller\AnnounceController::index
 
 announce.show:
-    path: /announces/show/{id}
+    path: /announces/show/{slug}
     controller: App\Controller\AnnounceController::show
 
 announce.edit:
     path: /announces/edit/{slug}
     controller: App\Controller\AnnounceController::edit
+
+announce.delete:
+    path: /announces/delete/{id}
+    controller: App\Controller\AnnounceController::delete

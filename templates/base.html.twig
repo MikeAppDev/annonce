@@ -32,6 +32,9 @@
                             </li>
                             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                             <li class="nav-item">
+                                    <a class="nav-link" href="{{ path('announces/create') }}">Créer</a>
+                            </li>
+                            <li class="nav-item">
                                     <a class="nav-link" href="{{ path('logout') }}">Se Deconnecter</a>
                             </li>
                             {% else %}
@@ -43,7 +46,7 @@
                             </li>
                             {% endif %}
                             {% if is_granted('ROLE_ADMIN') %}
-                            
+
                             {% endif %}
                         </ul>
                     </div>
