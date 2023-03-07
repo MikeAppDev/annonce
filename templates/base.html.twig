@@ -27,6 +27,21 @@
                             <li class="nav-item">
                                 <a class="nav-link" aria-current="page" href="{{ path('homepage') }}">Accueil</a>
                             </li>
+                            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                            <li class="nav-item">
+                                    <a class="nav-link" href="{{ path('logout') }}">Se Deconnecter</a>
+                            </li>
+                            {% else %}
+                            <li class="nav-item">
+                                    <a class="nav-link" href="{{ path('register') }}">Inscription</a>
+                            </li>
+                            <li class="nav-item">
+                                    <a class="nav-link" href="{{ path('login') }}">Se Connecter</a>
+                            </li>
+                            {% endif %}
+                            {% if is_granted('ROLE_ADMIN') %}
+                            
+                            {% endif %}
                         </ul>
                     </div>
                 </div>
