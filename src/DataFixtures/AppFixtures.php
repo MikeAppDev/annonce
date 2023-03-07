@@ -26,9 +26,9 @@ class AppFixtures extends Fixture
 
         // Création d'un utilisateur
         $user = new User();
-        $user->setEmail('admin@symfoblog.dev');
-        $user->setName('Jean');
-        $user->setPassword($this->hasher->hashPassword($user, 'adminadmin'));
+        $user->setEmail('aze@aze.fr');
+        $user->setName('aze');
+        $user->setPassword($this->hasher->hashPassword($user, 'azeaze'));
         $user->setcreatedAt(new \DateTime());
         $manager->persist($user);
 
