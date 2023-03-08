@@ -37,6 +37,7 @@ class AnnounceType extends AbstractType
             ->add('picture', FileType::class, [
                 'multiple' => true,
                 'mapped' => false,
+                'required' => false,
                 ])
             ->add('price', IntegerType::class, [
                 'label' => 'Prix'

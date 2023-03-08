@@ -115,7 +115,7 @@ class AnnounceController extends AbstractController
         $announce = $repository->findOneBy(['slug' => $slug]);
 
         // Si l'article n'existe pas on renvoie une page 404
-        if ($announce === null) {
+        if (!$announce) {
             throw $this->createNotFoundException("L'article n'existe pas");
         }
 
