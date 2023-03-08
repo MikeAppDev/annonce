@@ -10,11 +10,16 @@
             <strong>Crée par : {{ announce.author.name }}</strong>
             <br>
             <em>Le : {{ announce.createdAt|date("m/d/Y") }}</em>
+            <p class="pt-3">Catégories :</p>
             {% for p in announce.category %}
-            <p class="fw-bold">{{ p.name }}</p>
+            <p>{{ p.name }}</p>
             {% endfor %}
             <p>Description : {{ announce.description }}</p>
-            <p>{{ announce.price }}€</p>
+
+{% for i in announce.picture %}
+<img src="{{asset('image/announce/' ~ i.path)}}" width="250" height="250">
+{% endfor %}
+            <p>Prix : {{ announce.price }}€</p>
             <p>Ville : {{ announce.city }}</p>
             <p>Code Postal : {{ announce.zipcode }}</p>
             {% if (is_granted('ROLE_USER')) and (announce.author.id == app.user.id)  %}

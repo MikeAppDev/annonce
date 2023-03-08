@@ -39,6 +39,11 @@ class AnnounceRepository extends ServiceEntityRepository
         }
     }
 
+    public function findAllByDesc()
+    {
+        return $this->findBy(array(), array('id' => 'DESC'));
+    }
+
 //    /**
 //     * @return Announce[] Returns an array of Announce objects
 //     */

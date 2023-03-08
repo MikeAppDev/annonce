@@ -21,7 +21,7 @@ class AnnounceController extends AbstractController
     #[Route('/announces', name: 'announces')]
     public function index(AnnounceRepository $repository): Response
     {
-        $announces = $repository->findAll();
+        $announces = $repository->findAllByDesc();
 
         return $this->render('announce/index.html.twig', [
             'announces' => $announces    
@@ -101,12 +101,11 @@ class AnnounceController extends AbstractController
              // Redirection
              return $this->redirectToRoute('announces.index');
          }
-         
+
          // Affichage du formulaire
          return $this->render('announce/create.html.twig', [
              'form' => $form,
              'user' => $user,
-             'imageAnnounce' => $announce->getPicture()
          ]);
     }
     
