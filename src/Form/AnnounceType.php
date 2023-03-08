@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -33,6 +34,10 @@ class AnnounceType extends AbstractType
             ->add('description', TextareaType::class, [
                 'label' => 'Description'
             ])
+            ->add('picture', FileType::class, [
+                'multiple' => true,
+                'mapped' => false,
+                ])
             ->add('price', IntegerType::class, [
                 'label' => 'Prix'
             ])

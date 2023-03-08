@@ -10,9 +10,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Announce;
+use App\Entity\Picture;
 use App\Form\AnnounceType;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 class AnnounceController extends AbstractController
 {
@@ -44,8 +46,9 @@ class AnnounceController extends AbstractController
     }
 
     #[Route('/announces/create', name: 'announces/create')]
-    public function create(Request $request, ManagerRegistry $doctrine): Response
+    public function create(Request $request, ManagerRegistry $doctrine, SluggerInterface $slugger, Announce $announce = null): Response
     {
+
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED');
          // Création d'une entité "vide"
          $announce = new Announce();
@@ -58,13 +61,40 @@ class AnnounceController extends AbstractController
          
          // Gestion du formulaire
          if ($form->isSubmitted() && $form->isValid()) {
+             //gestion de l'image
+             $imageFiles = $form->get('picture')->getData();
+             //  dd($announce->getPicture());
+             
+            $entityManager = $doctrine->getManager();
+
+            foreach($imageFiles as $imageFile){
+            if ($imageFile) {
+                $originalFileName = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFileName);
+                $newFilename =  $safeFilename.'-'.uniqid().".".$imageFile->guessExtension();
+
+                try {
+                    $imageFile->move(
+                        $this->getParameter('upload_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    $this->addFlash('message','une erreur est survenu lors de l\'upload de l\'image!');
+                    // return $this->redirectToRoute('allbuild');
+                }
+            }
+            $picture = new Picture();
+            $picture->setPath($newFilename);
+            $entityManager->persist($picture);
+            $announce->addPicture($picture);
+            }
              // Récupérer l'entité qui a été modifiée
              $announce = $form->getData();
              $announce->setCreatedAt(new \DateTime());
              $announce->setupdatedAt(new \DateTime());
              $announce->setSlug($announce->getTitle());
+             
              // Insertion de l'entité en base de données
-             $entityManager = $doctrine->getManager();
              $entityManager->persist($announce);
              $entityManager->flush();
              
@@ -75,7 +105,8 @@ class AnnounceController extends AbstractController
          // Affichage du formulaire
          return $this->render('announce/create.html.twig', [
              'form' => $form,
-             'user' => $user
+             'user' => $user,
+             'imageAnnounce' => $announce->getPicture()
          ]);
     }
     
