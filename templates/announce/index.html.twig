@@ -5,6 +5,7 @@
 {% block body %}
     <div class="mt-5 text-center">
     <h1 class="mb-5">Liste des annonces</h1>
+    {{ knp_pagination_render(announces) }}
         {% for announce in announces %}
         <div class="text-center border mx-auto my-2 w-50 bg-light">
             <h3><a class="text-dark" href="{{ path('announce.show', {slug: announce.slug}) }}">{{ announce.title }}</a></h3>
@@ -19,4 +20,5 @@
         </div>
         {% endfor %}
     </div>
+    {{ knp_pagination_render(announces) }}
 {% endblock %}

@@ -15,13 +15,20 @@ use App\Form\AnnounceType;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Knp\Component\Pager\PaginatorInterface; // Nous appelons le bundle KNP Paginator
 
 class AnnounceController extends AbstractController
 {
     #[Route('/announces', name: 'announces')]
-    public function index(AnnounceRepository $repository): Response
+    public function index(Request $request, AnnounceRepository $repository, PaginatorInterface $paginator): Response
     {
-        $announces = $repository->findAllByDesc();
+        $donnees = $repository->findAllByDesc();
+
+        $announces = $paginator->paginate(
+            $donnees, // Requête contenant les données à paginer (ici nos articles)
+            $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
+            10 // Nombre de résultats par page
+        );
 
         return $this->render('announce/index.html.twig', [
             'announces' => $announces    

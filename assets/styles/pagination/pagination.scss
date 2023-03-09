@@ -1,0 +1,13 @@
+.pagination {
+    justify-content: center;
+    font-size: 2em;
+    letter-spacing: 0.4em;
+}
+
+.current {
+    color: orangered;
+}
+
+.page a, .first a, .previous a, .next a, .last a {
+    color: black;
+}
