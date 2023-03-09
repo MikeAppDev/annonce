@@ -14,15 +14,15 @@
             {% for p in announce.category %}
             <p>{{ p.name }}</p>
             {% endfor %}
-            <p>Description : {{ announce.description }}</p>
+            <p>Description : {{ announce.description|raw }}</p>
 
-{% for i in announce.picture %}
-<img src="{{asset('image/announce/' ~ i.path)}}" width="250" height="250">
-{% endfor %}
+            {% for i in announce.picture %}
+            <img src="{{asset('image/announce/' ~ i.path)}}" width="250" height="250">
+            {% endfor %}
             <p>Prix : {{ announce.price }}€</p>
             <p>Ville : {{ announce.city }}</p>
             <p>Code Postal : {{ announce.zipcode }}</p>
-            {% if (is_granted('ROLE_USER')) and (announce.author.id == app.user.id)  %}
+            {% if (is_granted('ROLE_USER')) and (announce.author.id == app.user.id) or (is_granted('ROLE_ADMIN'))  %}
             <button class="btn btn-danger mb-3"><a class="text-white text-decoration-none" href="{{ path('announce.delete', {id: announce.id}) }}">Supprimer</a></button>
             <button class="btn btn-primary mb-3"><a class="text-white text-decoration-none" href="{{ path('announce.edit', {slug: announce.slug}) }}">Modifier</a></button>
             {% endif %}

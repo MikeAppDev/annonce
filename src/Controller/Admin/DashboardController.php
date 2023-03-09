@@ -57,6 +57,8 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Toutes les images', 'fas fa-List', Picture::class),
             MenuItem::linkToCrud('Add', 'fas fa-plus', Picture::class)->setAction(Crud::PAGE_NEW),
         ]);
+        // yield MenuItem::linkToCrud('User', 'fas fa-list', User::class);
+
         // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
     }
 }

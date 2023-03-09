@@ -4,6 +4,8 @@ namespace App\Controller\Admin;
 
 use App\Entity\Picture;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 
 class PictureCrudController extends AbstractCrudController
 {
@@ -12,14 +14,14 @@ class PictureCrudController extends AbstractCrudController
         return Picture::class;
     }
 
-    /*
+    
     public function configureFields(string $pageName): iterable
     {
-        return [
-            IdField::new('id'),
-            TextField::new('title'),
-            TextEditorField::new('description'),
-        ];
+        
+            yield IdField::new('id');
+            yield ImageField::new('path')
+            ->setBasePath('image/announce')
+            ->setUploadDir('public/image/announce');
     }
-    */
+    
 }

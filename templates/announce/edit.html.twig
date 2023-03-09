@@ -1,9 +1,16 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Modifier une annonce{% endblock %}
+{% set access = (is_granted('ROLE_USER')) and (announce.author.id == app.user.id) or (is_granted('ROLE_ADMIN'))%}
 
 {% block body %}
     <h1>Modifier une annonce</h1>
-
+            {% for i in announce.picture %}
+            <img src="{{asset('image/announce/' ~ i.path)}}" width="250" height="250"> 
+                {% if access  %}
+                    <button class="btn btn-danger mb-3"><a class="text-white text-decoration-none" href="{{ path('announce.remove', {id: i.id}) }}">Supprimer</a></button>
+                {% endif %}
+            {% endfor %}
     {{ form(form) }}
+            
 {% endblock %}

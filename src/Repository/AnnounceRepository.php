@@ -41,7 +41,8 @@ class AnnounceRepository extends ServiceEntityRepository
 
     public function findAllByDesc()
     {
-        return $this->findBy(array(), array('id' => 'DESC'));
+        //trier une liste par date de mise a jour
+        return $this->findBy(array(), array('updatedAt' => 'DESC'));
     }
 
 //    /**

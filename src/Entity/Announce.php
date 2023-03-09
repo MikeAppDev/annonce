@@ -222,4 +222,5 @@ class Announce
 
         return $this;
     }
+
 }

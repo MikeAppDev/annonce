@@ -174,7 +174,8 @@ class AnnounceController extends AbstractController
         }
 
         return $this->renderForm('announce/edit.html.twig', [
-            'form' => $form
+            'form' => $form,
+            'announce' => $announce,
         ]);
     }
 
@@ -188,6 +189,19 @@ class AnnounceController extends AbstractController
         $announce = $manager->getReference(Announce::class, $id);
         $this->denyAccessUnlessGranted('ANNOUNCE_DELETE', $announce);
         $manager->remove($announce);
+        $manager->flush();
+
+        return $this->redirectToRoute('announces.index');
+    }
+    public function remove(int $id, EntityManagerInterface $manager): Response
+    {
+        
+        // Attention pour ne pas avoir de problèmes avec les commentaires (contrainte de clé étrangère)
+        // Il faut penser à rajouter ceci dans l'entité Comment : #[ORM\JoinColumn(onDelete: 'CASCADE')]
+        
+        $picture = $manager->getReference(Picture::class, $id);
+        // $this->denyAccessUnlessGranted('PICTURE_REMOVE', $picture);
+        $manager->remove($picture);
         $manager->flush();
 
         return $this->redirectToRoute('announces.index');

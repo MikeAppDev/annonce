@@ -27,3 +27,7 @@ announce.delete:
 category.create:
     path: /category/create
     controller: App\Controller\CategoryController::create
+
+announce.remove:
+    path: /announces/remove/{id}
+    controller: App\Controller\AnnounceController::remove
