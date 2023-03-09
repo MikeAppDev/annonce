@@ -110,7 +110,7 @@ class AnnounceController extends AbstractController
     }
     
     
-    public function edit(string $slug, EntityManagerInterface $manager, Request $request, SluggerInterface $slugger, AnnounceRepository $repository): Response
+    public function edit(string $slug, ManagerRegistry $doctrine, EntityManagerInterface $manager, Request $request, SluggerInterface $slugger, AnnounceRepository $repository): Response
     {
         $announce = $repository->findOneBy(['slug' => $slug]);
 
@@ -135,6 +135,36 @@ class AnnounceController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+
+            $imageFiles = $form->get('picture')->getData();
+            //  dd($announce->getPicture());
+            
+           $entityManager = $doctrine->getManager();
+
+           foreach($imageFiles as $imageFile){
+           if ($imageFile) {
+               $originalFileName = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+               $safeFilename = $slugger->slug($originalFileName);
+               $newFilename =  $safeFilename.'-'.uniqid().".".$imageFile->guessExtension();
+
+               try {
+                   $imageFile->move(
+                       $this->getParameter('upload_directory'),
+                       $newFilename
+                   );
+               } catch (FileException $e) {
+                   $this->addFlash('message','une erreur est survenu lors de l\'upload de l\'image!');
+                   // return $this->redirectToRoute('allbuild');
+               }
+           }
+           $picture = new Picture();
+           $picture->setPath($newFilename);
+           $entityManager->persist($picture);
+           $announce->addPicture($picture);
+           }
+
+
             $announce->setSlug($slugger->slug($announce->getTitle()));
             $announce->setUpdatedAt(new \DateTimeImmutable());
             $manager->persist($announce);
