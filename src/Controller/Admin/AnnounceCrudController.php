@@ -22,6 +22,7 @@ class AnnounceCrudController extends AbstractCrudController
         yield TextField::new('title');
         yield AssociationField::new('category');
         yield AssociationField::new('picture');
+        // yield ImageField::new('picture');
             // ->setBasePath('public/image/announce');  
             // ->setUploadDir('public/image/announce')
             // ->setFormTypeOption('multiple', true);
