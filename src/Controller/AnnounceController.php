@@ -15,7 +15,7 @@ use App\Form\AnnounceType;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
-use Knp\Component\Pager\PaginatorInterface; 
+use Knp\Component\Pager\PaginatorInterface;
 
 class AnnounceController extends AbstractController
 {
