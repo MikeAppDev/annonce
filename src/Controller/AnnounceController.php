@@ -99,7 +99,7 @@ class AnnounceController extends AbstractController
              $announce = $form->getData();
              $announce->setCreatedAt(new \DateTime());
              $announce->setupdatedAt(new \DateTime());
-             $announce->setSlug($announce->getTitle());
+             $announce->setSlug($slugger->slug($announce->getTitle()));
              
              // Insertion de l'entité en base de données
              $entityManager->persist($announce);
