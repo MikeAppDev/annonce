@@ -31,8 +31,12 @@
                                 <a class="nav-link" href="{{ path('announces') }}">Voir les annonces</a>
                             </li>
                             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                            
                             <li class="nav-item">
                                     <a class="nav-link" href="{{ path('announces/create') }}">Déposer une annonce</a>
+                            </li>
+                            <li class="nav-item">
+                                    <a class="nav-link" href="{{ path('profile') }}">Profile</a>
                             </li>
                             <li class="nav-item">
                                     <a class="nav-link" href="{{ path('logout') }}">Se Deconnecter</a>
@@ -45,6 +49,7 @@
                                     <a class="nav-link" href="{{ path('login') }}">Se Connecter</a>
                             </li>
                             {% endif %}
+
                             {% if is_granted('ROLE_ADMIN') %}
                             <li class="nav-item">
                                     <a class="nav-link" href="{{ path('admin') }}">Panel Admin</a>

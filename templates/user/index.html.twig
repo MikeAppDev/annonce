@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+    <main class="container">
+
+    <h1 class="text-center my-5">Vos informations personnelle</h1>
+
+    <div class="card mx-auto col-md-5 shadow-lg">
+        <div class="card-body">
+            <h5 class="card-title"> {{ app.user.name }} </h5>
+            {% if app.user.roles == 'ROLE_ADMIN' %}
+                <h6 class="card-subtitle mb-2 text-muted">Vous êtes Admin du blog</h6>
+            {% else %}
+                <h6 class="card-subtitle mb-2 text-muted">Vous êtes Utilisateur du blog</h6>
+            {% endif %}
+
+            <p class="card-text d-flex justify-content-between">
+                <strong>Email : </strong>
+                <span>{{ app.user.email }}</span>
+            </p>
+            <p class="card-text d-flex justify-content-between">
+                <strong>Adresse : </strong>
+                <span>Rue des Beaux gosses de l'univers</span>
+            </p>
+            <p class="card-text d-flex justify-content-between">
+                <strong>Code Postal : </strong>
+                <span>66 666</span>
+            </p>
+            <p class="card-text d-flex justify-content-between">
+                <strong>Ville : </strong>
+                <span>Sur L'ile paradis</span>
+            </p>
+            <a href="{{ path('edit_profile',{'id': app.user.id})}}" class="card-link d-flex justify-content-center text-decoration-none">Modifier</a>
+        </div>
+    </div>
+
+    </main>
+{% endblock %}

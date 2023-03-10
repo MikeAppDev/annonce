@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modification{% endblock %}
+
+{% block body %}
+
+    {{ form_start(form) }}
+
+        {{ form_row(form.email) }}
+        {{ form_row(form.name) }}
+
+        <button type="submit" class="btn btn-dark mb-5">
+        {% if editMode %}
+            Enregistrer les modifications
+        {% else %}
+            Enregistrer
+        {% endif %}
+        </button>
+
+    {{ form_end(form) }}
+
+
+{% endblock %}
